@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Test Me</title>
 </head>
 <body>
-<h1>{{number}}</h1>
+<form action= "{% url 'test_me:multipli' %}" method="post">
+        {% csrf_token %}
+        Number :
+        <input type="text" name="number"  >
+        <br>
+        <input type="submit" value="submit">
+    </form>
 </body>
 </html>
