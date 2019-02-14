@@ -1,12 +1,17 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.shortcuts import get_object_or_404, render
+
+
+from .models import Number
+
+def index(request):
+    return HttpResponse("Hello")
 
 def multi(request,id):
-    num = str(id) *3
+    number = str(id) *3
     context = {
-        'number': num
+        'num': number
     }
     return render(request,'index.html',context)
 
@@ -16,26 +21,20 @@ def multiplication(request):
         answer = int(request.POST['number']) * i
         a.append(answer)
     print(a)
+    try:
+        selected_num = Number.objects.get(num = request.POST['number'])
+    except (KeyError, Number.DoesNotExist):
+        selected_num = Number(num=request.POST['number'])
+        selected_num.save()
+    else:
+        selected_num.count += 1
+        selected_num.save()
     context = {
         'id': request.POST['number'],
-        'num': a
+        'num': a,
+        'count': selected_num.count
     }
     return render(request, 'multi.html', context)
 
 def inputnum(request):
     return render(request,'index.html')
-
-def countnum(request):
-    Num = request.POST['number']
-    try:
-        selected_num = Num.objects.get(id=request.POST['number'])
-
-    except (KeyError, request.POST['number'].DoesNotExist):
-        return render(request, 'index.html', {
-            'error_message': "Input num.",
-        })
-
-    else:
-        selected_num.count += 1
-        selected_num.save()
-    return HttpResponseRedirect(reverse('multi.html',args =(Num.id)))

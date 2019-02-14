@@ -5,13 +5,12 @@
     <title>Test Me</title>
 </head>
 <body>
-<form action= "{% url 'test_me:multipli' %}" method="post">
+    <form action= "{% url 'test_me:multipli' %}" method="post">
         {% csrf_token %}
         Number :
         <input type="text" name="number"  >
         <br>
         <input type="submit" value="submit">
-    <li><a href="{% url 'test_me:static' %}">Static for num</a></li>
     </form>
 </body>
 </html>
