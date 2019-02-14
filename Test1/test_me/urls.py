@@ -6,5 +6,5 @@ urlpatterns = [
     #path('<int:id>/', views.multiplication, name='multipi'), #multiplication
     path('', views.inputnum, name='inputnum'),
     path('multipli/', views.multiplication, name='multipli'),
-    path('static/' , views.countnum, name='static')
+    #path('static/' , views.countnum, name='static')
 ]

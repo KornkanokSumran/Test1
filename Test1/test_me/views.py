@@ -26,8 +26,9 @@ def inputnum(request):
     return render(request,'index.html')
 
 def countnum(request):
+    Num = request.POST['number']
     try:
-        selected_num = request.POST['number']
+        selected_num = Num.objects.get(id=request.POST['number'])
 
     except (KeyError, request.POST['number'].DoesNotExist):
         return render(request, 'index.html', {
@@ -37,4 +38,4 @@ def countnum(request):
     else:
         selected_num.count += 1
         selected_num.save()
-    return HttpResponseRedirect(reverse('static_num'))
+    return HttpResponseRedirect(reverse('multi.html',args =(Num.id)))
