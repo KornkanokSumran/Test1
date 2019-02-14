@@ -26,22 +26,15 @@ def inputnum(request):
     return render(request,'index.html')
 
 def countnum(request):
-    # selected_num = request.POST['number']
-    # if selected_num = 1:
-    #     selected_num.votes += 1
-    #     selected_num.save()
-    context = {
-        'range': range(1,13)
-    }
     try:
         selected_num = request.POST['number']
 
     except (KeyError, request.POST['number'].DoesNotExist):
-        return render(request, 'indexhtml', {
+        return render(request, 'index.html', {
             'error_message': "Input num.",
         })
 
     else:
-        selected_num.votes += 1
+        selected_num.count += 1
         selected_num.save()
-    return HttpResponseRedirect(reverse('static_num' , context))
+    return HttpResponseRedirect(reverse('static_num'))
